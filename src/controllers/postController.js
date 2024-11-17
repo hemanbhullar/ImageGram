@@ -24,6 +24,8 @@ import { v2 as cloudinary } from 'cloudinary';
 //     });
 // }
 export async function createPost(req, res) {
+    const userDetails = req.user;
+    // console.log(userDetails);
     console.log(req.file); // Log the file object
 
     if (!req.file) {
@@ -39,6 +41,7 @@ export async function createPost(req, res) {
         const post = await createPostService({
             caption: req.body.caption,
             image: result.secure_url,
+            user: userDetails._id
         });
 
         return res.status(201).json({
