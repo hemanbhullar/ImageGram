@@ -44,6 +44,16 @@ export const updatePostByIdService = async (UpdatePostObject) => {
 
 export const deletePostByIdService = async (deletePostObject) => {
     const id = deletePostObject.id;
+    const user = deletePostObject.user;
+
+    const post = await findPostById(id);
+
+    if(post.user != user) {
+        throw {
+            status: 401,
+            message: "Unauthorized"
+        }
+    }
 
     const deletePost = await deletePostById(id);
 

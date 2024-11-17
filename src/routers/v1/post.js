@@ -21,6 +21,6 @@ router.get('/', getAllPost);
 
 router.put('/:id', updatePostByid);
 
-router.delete('/:id', deletePostByid);
+router.delete('/:id', isAuthenticated, deletePostByid);
 
 export default router;
