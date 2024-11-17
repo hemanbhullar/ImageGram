@@ -32,7 +32,7 @@ export const signinUserService = async (userDetails) => {
         //2. Compare the password
         const isPasswordValid = bcrypt.compareSync(userDetails.password, user.password);
 
-        if(!!isPasswordValid) {
+        if(!isPasswordValid) {
             throw {
                 status: 401,
                 message: "Invalid Password"

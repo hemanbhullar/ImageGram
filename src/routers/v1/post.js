@@ -7,7 +7,7 @@ import { createPost, deletePostByid, getAllPost, updatePostByid } from '../../co
 import { validate } from '../../validators/zodValidator.js';
 import { zodPostSchema } from '../../validators/zodPostSchema.js';
 import { cloudinaryConfig } from '../../config/cloudinaryConfig.js';
-import { isAuthenticated } from '../../middlewares/authMiddleware.js';
+import { isAdmin, isAuthenticated } from '../../middlewares/authMiddleware.js';
 
 const router = express.Router(); // Router object to modularize the routes
 
@@ -19,7 +19,7 @@ router.post('/', isAuthenticated, upload.single('image'), validate(zodPostSchema
 
 router.get('/', getAllPost);
 
-router.put('/:id', updatePostByid);
+router.put('/:id', isAuthenticated, isAdmin, updatePostByid);
 
 router.delete('/:id', isAuthenticated, deletePostByid);
 
