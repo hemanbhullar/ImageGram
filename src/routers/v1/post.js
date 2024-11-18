@@ -15,6 +15,15 @@ cloudinaryConfig();
 
 // router.post('/', s3uploader.single('image'), validate(zodPostSchema), createPost);
 
+
+/**
+ * @swagger
+ * /posts:
+ *  post:
+ *     summary: Create a new post
+ *     description: Create a new post
+ * 
+ */
 router.post('/', isAuthenticated, upload.single('image'), validate(zodPostSchema), createPost);
 
 router.get('/', getAllPost);

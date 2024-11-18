@@ -2,11 +2,16 @@ import express from 'express';
 import connectDB from './config/dbConfig.js';
 import apiRouter from './routers/apiRouter.js';
 import multer from 'multer';
+import swaggerUi from 'swagger-ui-express';
+import swaggerJSDoc from 'swagger-jsdoc';
+import { options } from './utils/swaggerOptions.js';
 
 // import { createPost, deletePostByid, getAllPost, getPostById, updatePostByid } from './controllers/postController.js';
 // import { s3uploader } from './config/multerConfig.js';
 
 const PORT = 3000; // port
+
+const swaggerDocs = swaggerJSDoc(options);
 
 const app = express(); //create express app server instance
 const upload = multer();
@@ -20,6 +25,8 @@ app.use(express.urlencoded());
 // app.use('/users', userRouter); // If the URL starts with /users, then use the userRouter to handle the request
 
 app.use('/api', apiRouter); //If the url start with /api then request is forwarded to the apiRouter
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.get('/', (req, res) => {
     return res.send('Home')
