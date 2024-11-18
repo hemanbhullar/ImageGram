@@ -5,6 +5,7 @@ import multer from 'multer';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
 import { options } from './utils/swaggerOptions.js';
+import ip from 'ip';
 
 // import { createPost, deletePostByid, getAllPost, getPostById, updatePostByid } from './controllers/postController.js';
 // import { s3uploader } from './config/multerConfig.js';
@@ -43,7 +44,8 @@ app.get('/ping', (req, res) => {
     console.log(req.query);
     console.log(req.body);
     // const name = req.params.name; // req.params -> { name: 'value' }
-    return res.json({message: 'pong'});
+    const ipaddr = ip.address();
+    return res.json({message: 'pong' + ipaddr});
 });
 
 // app.post('/posts', s3uploader.single('image') , createPost);
