@@ -1,33 +1,49 @@
-import { createCommentService } from "../services/commentService.js";
+import { createCommentService, findCommentByIdService } from "../services/commentService.js";
 
 export async function createComment(req, res) {
-    const content = req.content;
-    const userDetails = req.user;
-
-    if(!content){
-        return res.status(400).json({
-            success: false,
-            message: 'content is required'
-        });
-    }
-
     try {
-        const comment = await createCommentService({
-            content: content,
-            user: userDetails._id
-        })
-
+        const { content, onModel, commentableId } = req.body;
+        const response = await createCommentService(content, req.user._id, onModel, commentableId);
         return res.status(201).json({
             success: true,
-            message: 'Post created successfully',
-            data: comment
-        })
+            message: "Comment created successfully",
+            data: response
+        });
     } catch (error) {
         console.error(error);
+        if(error.status) {
+            return res.status(error.status).json({
+                success: false,
+                message: error.message
+            })
+        }
         return res.status(500).json({
             success: false,
-            message: 'Error creating comment',
-            error: error.message,
+            message: 'Internal Server Error',
+        });
+    }
+}
+
+export async function getCommentById(req, res) {
+    try {
+        const commentId = req.params.id;
+        const response = await findCommentByIdService(commentId);
+        return res.status(200).json({
+            success: true,
+            message: "Comment found successfully",
+            data: response
+        })
+    } catch (error) {
+        console.log(error);
+        if(error.status) {
+            return res.status(error.status).json({
+                success: false,
+                message: error.message
+            })
+        }
+        return res.status(500).json({
+            success: false,
+            message: "Intenal Server Error"
         });
     }
 }

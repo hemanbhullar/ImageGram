@@ -9,6 +9,6 @@ router.use('/posts', postRouter);
 
 router.use('/users', userRouter);
 
-router.use('/comment', commentRouter);
+router.use('/comments', commentRouter);
 
 export default router;
