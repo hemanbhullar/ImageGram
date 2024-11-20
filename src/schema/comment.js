@@ -48,3 +48,5 @@ export default Comment;
  *          replies:[C5]
  * ]
  */
+
+// Write an API to create comments on a post or another comment
