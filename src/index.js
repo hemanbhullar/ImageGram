@@ -89,3 +89,16 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     connectDB();
 });
+
+
+// Figure out alternative to store JWT tokens on the client side
+
+// and implement a solution storing it with different alternatives
+
+// Try to deploy both the frontend and backend and see if the jwt token based is working or not
+
+// Build your own real time polling app
+// Allow user to create polls
+// Allow real time updates and visualisation as votes are added
+// For visualisation you can use some charts
+// People can bookmark the poll, so that they can come up later and see what all poles they participated in.
