@@ -6,6 +6,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
 import { options } from './utils/swaggerOptions.js';
 import ip from 'ip';
+import { rateLimit } from 'express-rate-limit';
 
 // import { createPost, deletePostByid, getAllPost, getPostById, updatePostByid } from './controllers/postController.js';
 // import { s3uploader } from './config/multerConfig.js';
@@ -15,6 +16,14 @@ const PORT = 3000; // port
 const swaggerDocs = swaggerJSDoc(options);
 
 const app = express(); //create express app server instance
+
+const limiter = rateLimit({
+    windowMs: 0.5*60*1000, //30 seconds
+    max: 5 // limit each IP to 5 requests per windowMS
+});
+
+app.use(limiter);
+
 const upload = multer();
 
 app.use(express.json()); //start converting binary data into a JSON
